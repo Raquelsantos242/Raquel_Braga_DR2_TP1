@@ -1,0 +1,106 @@
+package org.example;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Biblioteca {
+    private List<Livro> livros;
+
+    public Biblioteca() {
+        livros = new ArrayList<>();
+    }
+
+    public void adicionarLivro(String titulo) {
+        livros.add(new Livro(titulo));
+    }
+
+    public void emprestarLivro(String titulo) {
+        for (int i = 0; i < livros.size(); i++) {
+            Livro livro = livros.get(i);
+            if (livro.getTitulo().equals(titulo) && livro.isDisponivel()) {
+                livro.emprestar();
+                System.out.println("Livro emprestado: " + titulo);
+                return;
+            }
+        }
+        System.out.println("Livro não disponível.");
+    }
+
+    public void devolverLivro(String titulo) {
+        for (int i = 0; i < livros.size(); i++) {
+            Livro livro = livros.get(i);
+            if (livro.getTitulo().equals(titulo) && !livro.isDisponivel()) {
+                livro.devolver();
+                System.out.println("Livro devolvido: " + titulo);
+                return;
+            }
+        }
+        System.out.println("Livro não encontrado ou já disponível.");
+    }
+
+    public void listarLivros() {
+        System.out.println("=== Biblioteca ===");
+        for (int i = 0; i < livros.size(); i++) {
+            livros.get(i).exibirDetalhes();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+                Biblioteca biblioteca = new Biblioteca();
+
+                biblioteca.adicionarLivro("Dracula");
+                biblioteca.adicionarLivro("O Cordunda de Notre Dame");
+                biblioteca.adicionarLivro("O Hobbit");
+                biblioteca.adicionarLivro("Noite na Taverna");
+
+                biblioteca.listarLivros();
+
+                biblioteca.emprestarLivro("Dracula");
+                biblioteca.listarLivros();
+
+                biblioteca.devolverLivro("Dracula");
+                biblioteca.listarLivros();
+            }
+        }
+class Livro {
+    private String titulo;
+    private boolean disponivel;
+
+    public Livro(String titulo) {
+        this.titulo = titulo;
+        this.disponivel = true;
+    }
+
+    public String getTitulo() {
+
+        return titulo;
+    }
+
+    public boolean isDisponivel() {
+
+        return disponivel;
+    }
+
+    public void emprestar() {
+        if (disponivel) {
+            disponivel = false;
+        } else {
+            throw new IllegalStateException("O livro já está emprestado.");
+        }
+    }
+
+    public void devolver() {
+
+        disponivel = true;
+    }
+
+    public void exibirDetalhes() {
+        
+        System.out.println(titulo + " - " + (disponivel ? "Disponível" : "Emprestado"));
+    }
+
+}
+
+
