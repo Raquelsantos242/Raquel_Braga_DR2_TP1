@@ -6,12 +6,15 @@ public class Main {
 
 
         static class SistemaFinanceiro {
-            private List<String> contas;
+            private List<String> nomes;
             private List<Double> valores;
+            private List<Integer> ids;
+            private int proximoId = 1;
 
             public SistemaFinanceiro() {
-                this.contas = new ArrayList<>();
+                this.nomes = new ArrayList<>();
                 this.valores = new ArrayList<>();
+                this.ids = new ArrayList<>();
             }
 
             public void adicionarConta(String conta, double valor) {
@@ -21,13 +24,15 @@ public class Main {
                 if (valor < 0) {
                     throw new IllegalArgumentException("Saldo não pode ser negativo.");
                 }
-                contas.add(conta);
+
+                ids.add(proximoId++);
+                nomes.add(conta);
                 valores.add(valor);
             }
 
             public void gerarRelatorio() {
-                for (int i = 0; i < contas.size(); i++) {
-                    System.out.println(contas.get(i) + ": " + valores.get(i));
+                for (int i = 0; i < nomes.size(); i++) {
+                    System.out.println("ID: " + ids.get(i) + " | Nome: " + nomes.get(i) + " | Saldo: " + valores.get(i));
                 }
             }
 
@@ -50,3 +55,4 @@ public class Main {
             }
         }
     }
+
