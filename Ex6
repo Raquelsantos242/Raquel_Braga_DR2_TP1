@@ -1,0 +1,48 @@
+package org.example;
+
+import java.util.List;
+import java.util.Arrays;
+
+public class RelatorioFinanceiro {
+
+    public void gerarRelatorio(List<String> clientes, List<Double> saldos) {
+        exibirCabecalho();
+        exibirDados(clientes, saldos);
+        exibirRodape();
+    }
+
+    private void exibirCabecalho() {
+
+        System.out.println("=== Relatório Financeiro ===");
+    }
+
+    private String formatarRelatorio(String cliente, double saldo) {
+        return "Cliente: " + cliente + " - Saldo: R$ " + String.format("%.2f", saldo);
+    }
+    private void exibirDados(List<String> clientes, List<Double> saldos) {
+        for (int i = 0; i < clientes.size(); i++) {
+            System.out.println(formatarRelatorio(clientes.get(i), saldos.get(i)));
+        }
+    }
+
+    private void exibirRodape() {
+        System.out.println("===========================");
+        System.out.println("Fim do Relatório");
+    }
+}
+
+package org.example;
+import java.util.List;
+import java.util.Arrays;
+public class Main {
+    public static void main(String[] args) {
+
+                RelatorioFinanceiro relatorio = new RelatorioFinanceiro();
+
+                List<String> clientes = Arrays.asList("Pawan", "Carla", "Renato");
+                List<Double> saldos = Arrays.asList(4000.00, 2750.75, -33.00);
+
+                relatorio.gerarRelatorio(clientes, saldos);
+            }
+        }
+
