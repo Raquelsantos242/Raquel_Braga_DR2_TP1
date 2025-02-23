@@ -1,0 +1,127 @@
+package org.example;
+
+public class Conta {
+    private String titular;
+    private double saldo;
+
+    public Conta(String titular, double saldoInicial) {
+        this.titular = titular;
+        this.saldo = saldoInicial;
+    }
+
+    public String getTitular() {
+
+        return titular;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+        } else {
+            throw new IllegalArgumentException("O valor do depósito deve ser positivo.");
+        }
+    }
+
+    public boolean sacar(double valor) {
+        if (valor > 0 && saldo >= valor) {
+            saldo -= valor;
+            return true;
+        }
+        return false;
+    }
+
+    public String formatarConta() {
+        return "Conta de " + titular + " - Saldo: R$ " + saldo;
+    }
+}
+package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Gerenciador {
+    private List<Conta> contas;
+
+    public Gerenciador() {
+
+        contas = new ArrayList<>();
+    }
+
+    public void criarConta(String titular, double saldoInicial) {
+        if (saldoInicial < 0) {
+            System.out.println("Saldo inicial não pode ser negativo.");
+            return;
+        }
+        contas.add(new Conta(titular, saldoInicial));
+        System.out.println("Conta de" + titular + " criada, com saldo de R$ " + saldoInicial);
+    }
+
+    public Conta buscarConta(String titular) {
+        for (int i = 0; i < contas.size(); i++) {
+            if (contas.get(i).getTitular().equalsIgnoreCase(titular)) {
+                return contas.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void transferir(String origem, String destino, double valor) {
+        Conta contaOrigem = buscarConta(origem);
+        Conta contaDestino = buscarConta(destino);
+
+        if (contaOrigem == null) {
+            System.out.println("A conta de origem não foi encontrada.");
+            return;
+        }
+
+        if (contaDestino == null) {
+            System.out.println("A conta de destino não foi encontrada.");
+            return;
+        }
+
+        if (contaOrigem.sacar(valor)) {
+            contaDestino.depositar(valor);
+            System.out.println("Transferência de R$ " + valor + " realizada com sucesso de " + origem + " para " + destino);
+        } else {
+            System.out.println("Saldo insuficiente para a transferência.");
+        }
+    }
+
+    public void exibirContas() {
+        System.out.println("=== Contas Bancárias ===");
+        for (int i = 0; i < contas.size(); i++) {
+            System.out.println(contas.get(i).formatarConta());
+        }
+    }
+}
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+        Gerenciador gerenciador = new Gerenciador();
+
+
+        gerenciador.criarConta("Solange", 1000);
+        gerenciador.criarConta("Lucas", 500);
+        gerenciador.exibirContas();
+
+        gerenciador.criarConta("Eric", -100);
+        gerenciador.exibirContas();
+
+        gerenciador.transferir("Solange", "Lucas", 200);
+        gerenciador.exibirContas();
+
+        gerenciador.transferir("Lucas", "Solange", 1000);
+
+        gerenciador.transferir("Solange", "Daroga", 50);
+
+        gerenciador.transferir("Daroga", "Lucas", 50);
+
+        gerenciador.exibirContas();
+
+    }
+}
