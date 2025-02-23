@@ -1,0 +1,69 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
+public class CarrinhoDeCompras {
+    private List<Produto> produtos;
+
+    public CarrinhoDeCompras() {
+
+        produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(String nome, double preco, int quantidade) {
+        produtos.add(new Produto(nome, preco, quantidade));
+    }
+
+    public void calcularTotal() {
+        double total = 0;
+        for (int i = 0; i < produtos.size(); i++) {
+            total += produtos.get(i).calcularSubtotal();
+        }
+        System.out.println("Total da compra: R$ " + total);
+    }
+
+
+    public void exibirCarrinho() {
+        System.out.println("=== Carrinho de Compras ===");
+        System.out.println(produtos);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+
+                CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+
+                carrinho.adicionarProduto("Fone de ouvido", 200.00, 2);
+                carrinho.adicionarProduto("gaita", 90.00, 1);
+                carrinho.adicionarProduto("manteiga de cacau", 3.00, 1);
+
+                carrinho.exibirCarrinho();
+                carrinho.calcularTotal();
+            }
+        }
+
+class Produto {
+    private String nome;
+    private double preco;
+    private int quantidade;
+
+    public Produto(String nome, double preco, int quantidade) {
+        if (preco < 0 || quantidade < 0) {
+            throw new IllegalArgumentException("Preço e quantidade devem ser valores positivos.");
+        }
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    public double calcularSubtotal() {
+
+        return preco * quantidade;
+    }
+
+    @Override
+    public String toString() {
+       return nome + " - Preço: R$ " + preco + " - Quantidade: " + quantidade;
+    }
+}
+
