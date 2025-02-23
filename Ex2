@@ -1,0 +1,38 @@
+package org.example;
+
+public class Processador {
+    int tamanho_minimo = 10;
+
+    public void validarDado(String dado) {
+        if (dado == null || dado.isEmpty()) {
+            exibirMensagem("Dado inválido.");
+            return;
+        }
+
+        if (dado.length() < tamanho_minimo) {
+            exibirMensagem("Dado muito curto.");
+            return;
+        }
+
+        exibirMensagem("Dado válido: " + dado);
+    }
+
+    private void exibirMensagem(String mensagem) {
+        System.out.println(mensagem);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Processador processador = new Processador();
+
+        processador.validarDado("Texto com mais de 10 caracteres");
+        processador.validarDado("Curto");
+        processador.validarDado("");
+        processador.validarDado(null);
+
+
+    }
+    
+}
+
