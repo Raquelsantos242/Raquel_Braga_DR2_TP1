@@ -1,0 +1,76 @@
+package org.example;
+
+public class ContaBancaria {
+    private String titular;
+    private double saldo;
+
+    public ContaBancaria(String titular, double saldo) {
+        validarTitular(titular);
+        validarSaldoInicial(saldo);
+
+        this.titular = titular;
+        this.saldo = saldo;
+    }
+
+    public void depositar(double valor) {
+        validarValorPositivo(valor);
+        saldo += valor;
+        System.out.println("Depósito no valor de R$ " + String.format("%.2f", valor) + " realizado com sucesso.");
+    }
+
+    public void sacar(double valor) {
+        validarValorPositivo(valor);
+        if (valor > saldo) {
+            throw new IllegalArgumentException("Saldo insuficiente.");
+        }
+        saldo -= valor;
+        System.out.println("Saque no valor de R$ " + String.format("%.2f", valor) + " realizado com sucesso.");
+    }
+
+    public double getSaldo() {
+
+        return saldo;
+    }
+
+    public String getTitular() {
+
+        return titular;
+    }
+
+    private void validarTitular(String titular) {
+        if (titular == null || titular.isBlank()) {
+            throw new IllegalArgumentException("Titular não pode ser nulo ou vazio.");
+        }
+    }
+
+
+    private void validarSaldoInicial(double saldo) {
+        if (saldo < 0) {
+            throw new IllegalArgumentException("Saldo inicial não pode ser negativo.");
+        }
+    }
+
+    private void validarValorPositivo(double valor) {
+        if (valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser positivo.");
+        }
+    }
+}
+
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+                try {
+                    ContaBancaria conta = new ContaBancaria("Alice", 1000);
+
+                    conta.depositar(500);
+                    conta.sacar(300);
+                    System.out.println("Saldo atual: R$ " + conta.getSaldo());
+
+                    conta.sacar(1500);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+            }
+        }
