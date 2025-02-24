@@ -1,0 +1,60 @@
+package org.example;
+
+public class Pedido {
+    private int id;
+    private String descricao;
+    private double valor;
+
+    /**
+     * Constrói um pedido com ID, descrição e valor.
+     *
+     * id:        Identificador único do pedido.
+     * descricao: Breve descrição do pedido.
+     * valor:     Valor total do pedido.
+     */
+    public Pedido(int id, String descricao, double valor) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    public double getValor() {
+        return valor;
+    }
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+}
+
+package org.example;
+
+
+public class Main {
+    public static void main(String[] args) {
+
+        Pedido meuPedido = new Pedido(1, "Prato branco", 25.00);
+
+        System.out.println("Pedido ID: " + meuPedido.getId());
+        System.out.println("Descrição: " + meuPedido.getDescricao());
+        System.out.println("Valor: R$ " + meuPedido.getValor());
+
+        meuPedido.setDescricao("Prato preto");
+        meuPedido.setValor(24.00);
+
+        System.out.println("\nApós alteração:");
+        System.out.println("Descrição: " + meuPedido.getDescricao());
+        System.out.println("Valor: R$ " + meuPedido.getValor());
+    }
+}
